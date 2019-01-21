@@ -1,58 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import PropTypes from 'prop-types';
-//
-const myNews = [
-  {
-    id: 1,
-    author: 'Саша Печкин',
-    text: 'В четверг, четвертого числа...',
-    bigText: 'в четыре с четвертью часа четыре чёрненьких чумазеньких чертёнка чертили чёрными чернилами чертёж.'
-  },
-  {
-    id: 2,
-    author: 'Просто Вася',
-    text: 'Считаю, что $ должен стоить 35 рублей!',
-    bigText: 'А евро 42!'
-  },
-  {
-    id: 3,
-    author: 'Max Frontend',
-    text: 'Прошло 2 года с прошлых учебников, а $ так и не стоит 35',
-    bigText: 'А евро опять выше 70.'
-  },
-  {
-    id: 4,
-    author: 'Гость',
-    text: 'Бесплатно. Без смс, про реакт, заходи - https://maxpfrontend.ru',
-    bigText: 'Еще есть группа VK, telegram и канал на youtube! Вся инфа на сайте, не реклама!'
-  }
-];
-class Article extends React.Component {
-  state = {
-    visible: false, // определили начальное состояние
-  }
+import { BrowserRouter as Router, Switch, Route, NavLink} from "react-router-dom";
+
+//import myNews from "./data/news.json";
+//var myNews = JSON.parse(fs.readFileSync('./data/news.json'));
+var myNews = require('./data/news.json');
+
+class Article2 extends React.Component {
+
   handleReadMoreClck = (e) => { // добавили метод
     e.preventDefault()
-    this.setState({ visible: true })
+    console.log(this.state.currentPage)
+    this.setState({currentPage:'ArticleDetail'})
+    console.log(this.state.currentPage)
   }
 
   render() {
     const { author, text, bigText } = this.props.data;
-    const { visible } = this.state
     return (
       <div className="article">
         <p className="news__author">{author}:</p>
         <p className="news__text">{text}</p>
-        { !visible && <a onClick={this.handleReadMoreClck} href="#" className='news__readmore'>Подробнее</a> }
-        { visible && <p className='news__big-text'>{bigText}</p> }
+        <a onClick={this.handleReadMoreClck} href="#" className='news__readmore'>Подробнее</a>
       </div>
     )
   }
 }
 
-Article.propTypes = {
+Article2.propTypes = {
   data: PropTypes.shape({
     author: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
@@ -60,13 +36,7 @@ Article.propTypes = {
   })
 }
 
-class News extends React.Component {
-  state = {
-    counter: 0,
-  }
-  handleClickOnNewsAtAll = () => {
-    this.setState({ counter: ++this.state.counter });
-  }
+class News2 extends React.Component {
   renderNews = () => {
     const { data } = this.props;
     let newsTemplate = null;
@@ -82,18 +52,17 @@ class News extends React.Component {
   }
   render() {
     const { data } = this.props;
-    const { counter } = this.state;
     return (
       <div className="news">
         {this.renderNews()}
-        {data.length ? <strong onClick={this.handleClickOnNewsAtAll} className={'news__count'}>Всего новостей: {data.length}</strong> : null
+        {data.length ? <strong className={'news__count'}>Всего новостей: {data.length}</strong> : null
         }
       </div>
     );
   }
 }
 
-News.propTypes = {
+News2.propTypes = {
   data: PropTypes.array.isRequired // PropTypes (с большой буквы) = библиотека prop-types
 }
       
@@ -157,18 +126,141 @@ class Add extends React.Component {
 }
 
 //
-class App extends Component {
+class App2 extends Component {
+  constructor() {
+    super()
+    this.state = { currentPage: 'Home' }
+  }
+
   render() {
     return (
       <div className="App">
         <React.Fragment>
           <h3>Новости</h3>
-          <Add />
-          <News data={myNews}/>
+          {console.log(this.state.currentPage)}
+          {this.state.currentPage === 'Home'?<React.Fragment><News data={myNews}/></React.Fragment>:null}
+          {this.state.currentPage === 'ArticleDetail' ? <News data={myNews}/> : null}
         </React.Fragment>
       </div>
     );
   }
 }
+
+
+
+    const phones =[
+                    {id: 1, name: "iPhone 7"}, 
+                    {id: 2, name: "Google Pixel"}, 
+                    {id: 3, name: "HTC U Ultra"} 
+                ];
+ 
+    class Home extends React.Component{
+        render(){
+            return (
+              <React.Fragment>
+                <h2>Главная</h2>
+                <ul>
+                  <li>
+                    <NavLink to={`/about`}>About page</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to={`/news`}>News page</NavLink>
+                  </li>
+                </ul>
+              </React.Fragment>
+            );
+        }
+    }
+    class About extends React.Component{
+        render(){
+            return <h2>О сайте</h2>;
+        }
+    }
+    class NotFound extends React.Component{
+        render(){
+            return (
+              <React.Fragment>
+                <h2>Ресурс не найден</h2>
+                <br></br>
+                <p><NavLink to={`/`}>To main page..</NavLink></p>
+              </React.Fragment>
+          );
+        }
+    }
+     class ArticlesList extends React.Component{
+        render(){
+          return (
+            <div>
+              <h2>List of all news</h2>
+              {
+                myNews.map(function(item){
+                  return (
+                    <div className="article-post" key={item.id}>
+                      <p>Author: {item.author}</p>
+                      <NavLink to={`/news/article/${item.id}`}>{item.text}</NavLink>
+                    </div>
+                  )
+                })
+              }
+            </div>
+          );
+        }
+    }
+    class Article extends React.Component{
+        render(){
+            const prodId = this.props.match.params.id;
+            let article;
+            for(var i=0; i < myNews.length; i++){
+                if(myNews[i].id == prodId){
+                  article = myNews[i];
+                    break;
+                }
+            }
+            if(article === undefined)
+                return <h2>Article isn't exist!</h2>;
+            else
+                return (
+                  <React.Fragment>
+                    <h3>Article about {article.text}</h3>
+                    <p>{article.bigText}</p>
+                    <h5>Author: {article.author}</h5>
+                  </React.Fragment>
+                );
+        }
+    }
+    class News extends React.Component{
+        render(){
+            return (
+              <div>
+                <Switch>
+                  <Route exact path="/news" component={ArticlesList} />
+                  <Route path="/news/article/:id" component={Article} />
+                </Switch>
+              </div>
+          );
+        }
+    }
+
+    class App extends Component {
+    
+      render() {
+        return (
+          <div className="App">
+            <React.Fragment>
+              <Router>
+                <div>
+                  <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route path="/about" component={About} />
+                    <Route path="/news" component={News} />
+                    <Route component={NotFound} />
+                  </Switch>
+                </div>
+              </Router>
+            </React.Fragment>
+          </div>
+        );
+      }
+    }
 
 export default App;
