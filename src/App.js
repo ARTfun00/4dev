@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route, NavLink} from "react-router-dom
 
 //import myNews from "./data/news.json";
 //var myNews = JSON.parse(fs.readFileSync('./data/news.json'));
-var myNews = require('./data/news.json');
+var myNews = require('./data/CoinMarketData.json');
 
 class Article2 extends React.Component {
 
@@ -147,12 +147,6 @@ class App2 extends Component {
 }
 
 
-
-    const phones =[
-                    {id: 1, name: "iPhone 7"}, 
-                    {id: 2, name: "Google Pixel"}, 
-                    {id: 3, name: "HTC U Ultra"} 
-                ];
  
     class Home extends React.Component{
         render(){
@@ -191,13 +185,15 @@ class App2 extends Component {
         render(){
           return (
             <div>
-              <h2>List of all news</h2>
+              <h2>List of currencies</h2>
               {
                 myNews.map(function(item){
                   return (
-                    <div className="article-post" key={item.id}>
-                      <p>Author: {item.author}</p>
-                      <NavLink to={`/news/article/${item.id}`}>{item.text}</NavLink>
+                    <div className="article-post" key={item.rank}>
+                      <p>Short name: {item.shortName}</p>
+                      <p>Original name: {item.name}</p>
+                      <p>Price: {item.price}</p>
+                      <NavLink to={`/news/article/${item.rank}`}>Check details...</NavLink>
                     </div>
                   )
                 })
@@ -211,7 +207,7 @@ class App2 extends Component {
             const prodId = this.props.match.params.id;
             let article;
             for(var i=0; i < myNews.length; i++){
-                if(myNews[i].id == prodId){
+                if(myNews[i].rank == prodId){
                   article = myNews[i];
                     break;
                 }
@@ -221,9 +217,13 @@ class App2 extends Component {
             else
                 return (
                   <React.Fragment>
-                    <h3>Article about {article.text}</h3>
-                    <p>{article.bigText}</p>
-                    <h5>Author: {article.author}</h5>
+                    <p>Short name: {article.shortName}</p>
+                    <p>Original name: {article.name}</p>
+                    <p>Market cap: {article.marketCap}</p>
+                    <p>Price: {article.price}</p>
+                    <p>Volume: {article.volume}</p>
+                    <p>Supply: {article.supply}</p>
+                    <p>Change: {article.change}</p>
                   </React.Fragment>
                 );
         }
