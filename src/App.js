@@ -3,151 +3,19 @@ import './App.css';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Switch, Route, NavLink} from "react-router-dom";
 
+import {createStore} from 'redux';
+import allReducers from './reducers';
+
+import {Provider} from 'react-redux';
+import WebPage from './components/WebPage';
+import News from './components/News';
+
+const store = createStore (allReducers);
 //import myNews from "./data/news.json";
 //var myNews = JSON.parse(fs.readFileSync('./data/news.json'));
 var myNews = require('./data/CoinMarketData.json');
 
-class Article2 extends React.Component {
 
-  handleReadMoreClck = (e) => { // добавили метод
-    e.preventDefault()
-    console.log(this.state.currentPage)
-    this.setState({currentPage:'ArticleDetail'})
-    console.log(this.state.currentPage)
-  }
-
-  render() {
-    const { author, text, bigText } = this.props.data;
-    return (
-      <div className="article">
-        <p className="news__author">{author}:</p>
-        <p className="news__text">{text}</p>
-        <a onClick={this.handleReadMoreClck} href="#" className='news__readmore'>Подробнее</a>
-      </div>
-    )
-  }
-}
-
-Article2.propTypes = {
-  data: PropTypes.shape({
-    author: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    bigText: PropTypes.string.isRequired
-  })
-}
-
-class News2 extends React.Component {
-  renderNews = () => {
-    const { data } = this.props;
-    let newsTemplate = null;
-
-    if (data.length) {
-      newsTemplate = data.map(function(item) {
-        return <Article key={item.id} data={item}/>
-      })
-    } else {
-      newsTemplate = <p>К сожалению новостей нет</p>
-    }
-    return newsTemplate
-  }
-  render() {
-    const { data } = this.props;
-    return (
-      <div className="news">
-        {this.renderNews()}
-        {data.length ? <strong className={'news__count'}>Всего новостей: {data.length}</strong> : null
-        }
-      </div>
-    );
-  }
-}
-
-News2.propTypes = {
-  data: PropTypes.array.isRequired // PropTypes (с большой буквы) = библиотека prop-types
-}
-      
-class Add extends React.Component {
-  state = {
-    name: "",
-    text: "",
-    agree: false,
-  }
-
-  onBtnClickHandler = (e) => {
-    e.preventDefault()
-    alert("Name is: " + this.state.name + "\nText is: " + this.state.text)
-  }
-  handleChange = (e) => {
-    const { id, value } = e.currentTarget
-    this.setState({ [id]: e.currentTarget.value })
-  }
-  handleCheckBoxChange = (e) => {
-    this.setState({ agree: e.currentTarget.checked })
-  }
-  validate = () => {
-    const { name, text, agree } = this.state;
-    if(name.trim() && text.trim() && agree){
-      return true
-    }
-    else return false
-  }
-  
-  render() {
-    const { name, text } = this.state
-    return (
-      <form className='add'>
-        <input
-          id='name'
-          type='text'
-          onChange={this.handleChange}
-          className='add__author'
-          placeholder='Ваше имя'
-          value={name}
-        />
-        <textarea
-          id='text'
-          onChange={this.handleChange}
-          className='add__text'
-          placeholder='Текст новости'
-          value={text}
-        ></textarea>
-        <label className='add__checkrule'>
-          <input type='checkbox' onChange={this.handleCheckBoxChange} /> Я согласен с правилами
-        </label>
-        <button
-          className='add__btn'
-          onClick={this.onBtnClickHandler}
-          disabled={!this.validate()}>
-          Показать alert
-        </button>
-      </form>
-    )
-  }
-}
-
-//
-class App2 extends Component {
-  constructor() {
-    super()
-    this.state = { currentPage: 'Home' }
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <React.Fragment>
-          <h3>Новости</h3>
-          {console.log(this.state.currentPage)}
-          {this.state.currentPage === 'Home'?<React.Fragment><News data={myNews}/></React.Fragment>:null}
-          {this.state.currentPage === 'ArticleDetail' ? <News data={myNews}/> : null}
-        </React.Fragment>
-      </div>
-    );
-  }
-}
-
-
- 
     class Home extends React.Component{
         render(){
             return (
@@ -159,6 +27,9 @@ class App2 extends Component {
                   </li>
                   <li>
                     <NavLink to={`/news`}>News page</NavLink>
+                  </li>
+                  <li>
+                    <WebPage />
                   </li>
                 </ul>
               </React.Fragment>
@@ -180,14 +51,14 @@ class App2 extends Component {
               </React.Fragment>
           );
         }
-    }
+    }/*
      class ArticlesList extends React.Component{
         render(){
           return (
             <div>
               <h2>List of currencies</h2>
               {
-                myNews.map(function(item){
+                 myNews.map(function(item){
                   return (
                     <div className="article-post" key={item.rank}>
                       <p>Short name: {item.shortName}</p>
@@ -240,24 +111,22 @@ class App2 extends Component {
           );
         }
     }
-
+*/
     class App extends Component {
     
       render() {
         return (
           <div className="App">
-            <React.Fragment>
               <Router>
-                <div>
+                <Provider store={store}>
                   <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/about" component={About} />
                     <Route path="/news" component={News} />
                     <Route component={NotFound} />
                   </Switch>
-                </div>
+                </Provider>
               </Router>
-            </React.Fragment>
           </div>
         );
       }
