@@ -1,0 +1,87 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+ol li div {
+  display: inline-block;
+}
+div a:hover {
+  text-decoration: none;
+}
+
+.textClass1 {
+  text-align: center;
+  vertical-align:middle;
+  padding-left: 15px !important;
+}
+.textClass2 {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-right: 15px;
+  margin-left: -15px;
+}
+.rowHeader {
+  font-weight: bold;
+}
+.rowsCustom {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-left:  0px !important;
+  margin-right: 0px !important;
+}
+.hrCustom {
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+}
+.buttonD {
+  margin: 0px, 15px !important;
+}
+.sliders {
+  margin-bottom: 1rem;
+  width: 99%;
+}
+.customCSS {
+  display: inline-flex !important;
+  margin: 15px 0px;
+}
+.navlink {
+  padding: .5rem 2.5rem;
+  font-size: 120%;
+}
+
+.toMainPage {
+  margin: 2em 2.5em;
+  font-size: 105%;
+}
+.addTrack {
+  margin: 2em 5em;
+}
