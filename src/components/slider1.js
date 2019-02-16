@@ -9,9 +9,6 @@ import { sliderCurenciesSelector, isFetchingSelector } from './../redux/selector
 
 
 class SimpleSlider extends Component {
-    componentDidMount(){
-        this.props.getCurrencies()
-    }
     render() {
         const {pupils, isFetching, rtl} = this.props
         const settings = {
@@ -38,7 +35,7 @@ class SimpleSlider extends Component {
                                 <div>{curensy.name}</div>
                                 <div>{curensy.price}</div>
                                 <div>
-                                    <NavLink to={`/currency/${curensy.id}`} className="a-padding-adding">
+                                    <NavLink to={`/currency/${curensy.symbol}`} className="a-padding-adding">
                                         check details...
                                     </NavLink>
                                 </div>

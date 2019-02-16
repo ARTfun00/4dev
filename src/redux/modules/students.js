@@ -5,6 +5,7 @@ import { resolve, request, reject } from 'redux-promised'
 // Constants
 // ------------------------------------
 export const NAMESPACE = 'students'
+
 export const GET_STUDENTS = NAMESPACE+'/'+'GET_STUDENTS'
 export const REVERSE_STUDENTS = NAMESPACE+'/'+'REVERSE_STUDENTS'
 export const ADD_CURENCY = NAMESPACE+'/'+'ADD_CURENCY'
@@ -20,6 +21,7 @@ const url  = 'http://km.softbistro.online:20080/coins'
 // ------------------------------------
 const getOneCurrency = (symbol) => {
     let newURL = url + '/get/' + symbol + '/?expand=1';
+
     return{
         type: GET_ONE_CURENCY,
         meta: { promise: true },
@@ -79,21 +81,29 @@ export const actions = {
 // Reducer
 // ------------------------------------
 export default handleActions({
-    [resolve(GET_STUDENTS)]: (state, { payload }) => {
+    [resolve(GET_STUDENTS)]: (state, { payload }) => {// если запрос решён !
+        console.log("resolve")
         return{...state, data:payload, dataFethcing:false}
     },
-    [reject(GET_STUDENTS)]: (state, { payload }) => ({...state, data:null, dataFethcing:false}),
-    [request(GET_STUDENTS)]: (state, { payload }) => ({...state, data:null, dataFethcing:true}),
+    [reject(GET_STUDENTS)]: (state, { payload }) => {// если запрос отклонено !
+        console.log("reject")
+        return{...state, data:null, dataFethcing:false}
+    },
+    [request(GET_STUDENTS)]: (state, { payload }) => {// если запрос is dispatched(отправлен) !
+        console.log("request")
+        return{...state, data:null, dataFethcing:true}
+    },
 
     [resolve(ADD_CURENCY)]: (state, { payload }) => {
-        return{...state, data:payload, dataFethcing:true}
+        return{...state, data:payload, dataFethcing:false} //return{...state, data:payload}
     },
 
     [resolve(GET_ONE_CURENCY)]: (state, { payload }) => {
-        return{...state, data:payload}
+        console.log("resolve")
+        return{...state, dataOne:payload, dataFethcing:false}
     },
 
-    [REVERSE_STUDENTS]:state => {console.log("Reducer has worked! " + state.reversed); return {...state, reversed:!state.reversed}}
+    [REVERSE_STUDENTS]:state => {console.log("REVERSE_STUDENTS Reducer has worked! " + state.reversed); return {...state, reversed:!state.reversed}}
 },{reversed:false})
 
 // ------------------------------------

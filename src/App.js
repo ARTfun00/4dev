@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Header from './components/header'
 import Footer from './components/footer'
-import CurrencySimple from './components/StudentsSimple';
+import CurrencySimple from './components/CurensiesSimple';
 import LayoutOne from './components/mainLayout'
 import AddTracking from './components/tracking'
 
@@ -37,7 +37,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <React.Fragment>
-            <Header/>
+            <Header />
 
             <Switch>
               <Route exact path="/" component={LayoutOne} />
@@ -47,7 +47,7 @@ class App extends Component {
               <Route component={NotFound} />
             </Switch>
 
-            <Footer></Footer>
+            <Footer />
           </React.Fragment>    
         </Router>
       </Provider>

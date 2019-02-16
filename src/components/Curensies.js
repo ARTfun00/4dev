@@ -16,7 +16,7 @@ class Curensies extends Component {
         const {pupils={}} = this.props
         return map(pupils.data || [], (curensy,key)=>
         <div key={key} className="fill width">
-            <NavLink to={`/currency/${curensy.id}`}>
+            <NavLink to={`/currency/${curensy.symbol}`}>
                 <Row key={curensy.id} className="list-group-item-action rowsCustom">
                     <Col xs="1">{curensy.symbol}</Col>
                     <Col xs="2">{curensy.name}</Col>
