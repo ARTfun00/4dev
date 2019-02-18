@@ -72,9 +72,10 @@ export const reverseStudents  = createAction(REVERSE_STUDENTS)
 
 export const actions = {
     getCurrencies,
+    getOneCurrency,
     reverseStudents,
-    addCurency,
-    getOneCurrency
+    addCurency
+    
 }
 
 // ------------------------------------
@@ -82,25 +83,34 @@ export const actions = {
 // ------------------------------------
 export default handleActions({
     [resolve(GET_STUDENTS)]: (state, { payload }) => {// если запрос решён !
-        console.log("resolve")
-        return{...state, data:payload, dataFethcing:false}
+        console.log("resolve GET_STUDENTS")
+        return{...state, data:payload, dataFetching:false}
     },
     [reject(GET_STUDENTS)]: (state, { payload }) => {// если запрос отклонено !
-        console.log("reject")
-        return{...state, data:null, dataFethcing:false}
+        console.log("reject GET_STUDENTS")
+        return{...state, data:null, dataFetching:false}
     },
     [request(GET_STUDENTS)]: (state, { payload }) => {// если запрос is dispatched(отправлен) !
-        console.log("request")
-        return{...state, data:null, dataFethcing:true}
+        console.log("request GET_STUDENTS")
+        return{...state, data:null, dataFetching:true}
     },
-
+// ADD_CURENCY
     [resolve(ADD_CURENCY)]: (state, { payload }) => {
-        return{...state, data:payload, dataFethcing:false} //return{...state, data:payload}
+        console.log("resolve ADD_CURENCY")
+        return{...state, data:payload, dataFetching:false} //return{...state, data:payload}
     },
-
+// GET_ONE_CURENCY
     [resolve(GET_ONE_CURENCY)]: (state, { payload }) => {
-        console.log("resolve")
-        return{...state, dataOne:payload, dataFethcing:false}
+        console.log("resolve GET_ONE_CURENCY")
+        return{...state, dataOne:payload, dataOneFetching:false}
+    },
+    [reject(GET_ONE_CURENCY)]: (state, { payload }) => {
+        console.log("reject GET_ONE_CURENCY")
+        return{...state, dataOne:null, dataOneFetching:false}
+    },
+    [request(GET_ONE_CURENCY)]: (state, { payload }) => {
+        console.log("request GET_ONE_CURENCY")
+        return{...state, dataOne:null, dataOneFetching:true}
     },
 
     [REVERSE_STUDENTS]:state => {console.log("REVERSE_STUDENTS Reducer has worked! " + state.reversed); return {...state, reversed:!state.reversed}}

@@ -54,7 +54,8 @@ class Curensies extends Component {
                     {curencies}
                 </Container>
                 <div className="container textClass2">
-                    <Button color="info" onClick={this.handleClick.bind(this)} className="buttonD">Reverse list</Button>
+                    <Button color="info" onClick={this.handleRefreshClick.bind(this)} className="buttonD">Refresh data</Button>
+                    <Button color="secondary" onClick={this.handleClick.bind(this)} className="customButton">Reverse list</Button>
                     <Button color="danger" className="float-right">Delete list</Button>
                 </div>
                 
@@ -64,8 +65,10 @@ class Curensies extends Component {
     }
 
     handleClick() {
-        console.log(this);
         this.props.reverseStudents()
+    }
+    handleRefreshClick() {
+        this.props.getCurrencies()
     }
 }
 

@@ -1,8 +1,6 @@
 import _ from 'lodash'
 
 export const studentsSelector = state => {
-    console.log("studentsSelector has worked!")
-    console.log(state.students.data)
     return state.students.reversed ?  _.reverse(_.clone(state.students.data)) : _.clone(state.students.data)
 }
 
@@ -16,3 +14,5 @@ export const sliderCurenciesSelector = state => {
 export const curencyOneSelector = state => {
     return _.clone(state.students.dataOne)
 }
+
+export const isFetchingOneSelector = state => state.students.dataOneFetching

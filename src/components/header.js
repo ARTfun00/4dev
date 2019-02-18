@@ -11,11 +11,11 @@ import {
 class Header extends Component {
   render() {
     return (
-        <div id="header" className="text-center">
+        <div id="header">
             <Alert color="dark">
                 <h1 className="page-header">
                     Be <Badge color="info">always in trend</Badge><br/>
-                    <Badge color="secondary">of</Badge> any <Badge color="primary">cryptocurrency rate</Badge>
+                    of any <Badge color="primary">cryptocurrency rate</Badge>
                 </h1>
                 <Nav className="customCSS">
                     <NavItem id="UncontrolledTooltip1">

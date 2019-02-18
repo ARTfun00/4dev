@@ -85,3 +85,21 @@ div a:hover {
 .addTrack {
   margin: 2em 5em;
 }
+
+.detailsButtons {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  
+  margin-right: 2em;
+}
+.leftMarg {
+  margin-left: 2.5%;
+}
+.customButton {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+.customContainer {
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
